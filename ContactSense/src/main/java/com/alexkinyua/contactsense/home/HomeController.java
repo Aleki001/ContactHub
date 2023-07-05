@@ -4,6 +4,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+/**
+  * @Author: Alex Kinyua
+  */
+
 @Controller
 @RequestMapping("/")
 public class HomeController {
@@ -17,13 +21,9 @@ public class HomeController {
         return "login";
     }
 
-    @GetMapping("/register")
-    public String register(){
-        return "register";
+    @GetMapping("/error")
+    public String error(){
+        return "error";
     }
 
-    @GetMapping("/users")
-    public String allUsers(){
-        return "users";
-    }
 }

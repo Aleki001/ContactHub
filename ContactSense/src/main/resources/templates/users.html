@@ -10,27 +10,51 @@
 <body>
   <div class="container offset-sm-2 col-md-8 mt-lg-5">
       <div th:insert="~{layout/navbar}"></div>
-      <h2>All Users</h2>
-      <div class="d-flex justify-content-end mb-3">
-          <a class="btn btn-dark" th:href="@{/register}">Add User</a>
+      <div class="row mt-2">
+          <div th:if="${param.update_success}" class="col-sm-8">
+              <p class="alert alert-info alert-dismissible fade show" role="alert">
+                  A user has been updated successfully.
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </p>
+          </div>
+          <div th:if="${param.delete_success}" class="col-sm-8">
+              <p class="alert alert-info alert-dismissible fade show" role="alert">
+                  A user has been deleted successfully.
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </p>
+          </div>
       </div>
-      <table class="table table-bordered table-hover">
-          <thead>
-          <tr>
-              <th scope="col">Name</th>
-              <th scope="col">Email</th>
-              <th colspan="2">Actions</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr>
-              <td></td>
-              <td></td>
-              <td><a href="#" class="btn btn-dark">Edit</a></td>
-              <td><a href="#" class="btn btn-danger">Delete</a></td>
-          </tr>
-          </tbody>
-      </table>
+
+      <div th:switch="${users}">
+          <div>
+              <h2 th:case="null">THere are no users to display</h2>
+          </div>
+          <div th:case="*">
+
+              <h2>All Users</h2>
+              <div class="d-flex justify-content-end mb-3">
+                  <a class="btn btn-dark" th:href="@{/register/registration-form}">Add User</a>
+              </div>
+              <table class="table table-bordered table-hover">
+                  <thead>
+                  <tr>
+                      <th scope="col">Name</th>
+                      <th scope="col">Email</th>
+                      <th colspan="2">Actions</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr th:each="user : ${users}">
+                      <td th:text="${user.name}"></td>
+                      <td th:text="${user.email}"></td>
+                      <td><a href="#" class="btn btn-dark">Edit</a></td>
+                      <td><a href="#" class="btn btn-danger">Delete</a></td>
+                  </tr>
+                  </tbody>
+              </table>
+
+          </div>
+      </div>
 
       <div th:insert="~{layout/footer}"></div>
   </div>
