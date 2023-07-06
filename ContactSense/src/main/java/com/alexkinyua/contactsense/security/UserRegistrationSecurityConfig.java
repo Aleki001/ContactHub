@@ -31,6 +31,7 @@ public class UserRegistrationSecurityConfig {
                                 "/",
                                 "/login",
                                 "/error",
+                                "/resources/**",
                                 "register/**").permitAll()
                         .anyRequest()
                         .authenticated()
@@ -47,8 +48,7 @@ public class UserRegistrationSecurityConfig {
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/login")
                 )
-                .requestCache((cache) -> cache.disable()
-                )
+                .requestCache((cache) -> cache.disable())
                 .build();
 
     }

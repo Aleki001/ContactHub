@@ -1,6 +1,7 @@
 package com.alexkinyua.contactsense.home;
 
 import com.alexkinyua.contactsense.home.changePassword.ChangePasswordService;
+import com.alexkinyua.contactsense.user.User;
 import com.alexkinyua.contactsense.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -8,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.Optional;
 
 /**
   * @Author: Alex Kinyua
@@ -34,10 +36,27 @@ public class HomeController {
         return "error";
     }
 
-    @GetMapping("/profile-page")
-    public String showProfilePage(){
-        return "profilePage";
+//    @GetMapping("/profile-page")
+//    public String showProfilePage(Principal principal, Model model){
+//        String email = principal.getName();
+//        Optional<User> user = userService.findByEmail(email);
+//        model.addAttribute("user", user);
+//        return "profilePage";
+//    }
+@GetMapping("/profile-page")
+public String showProfilePage(Principal principal, Model model) {
+    String email = principal.getName();
+    Optional<User> optionalUser = userService.findByEmail(email);
+    if (optionalUser.isPresent()) {
+        User user = optionalUser.get();
+        model.addAttribute("user", user);
+    } else {
+        // Handle the case where the user is not found
+        // You can redirect to an error page or display a message
     }
+    return "profilePage";
+}
+
 
     @GetMapping("/change-password-form")
     public String changePasswordForm(){
@@ -49,8 +68,7 @@ public class HomeController {
     public String changePassword(@RequestParam("currentPassword") String currentPassword,
                                  @RequestParam("newPassword") String newPassword,
                                  @RequestParam("confirmPassword") String confirmPassword,
-                                 Principal principal,
-                                 Model model) {
+                                 Principal principal) {
         // 1. Retrieve the currently logged-in user's username or email from the Principal object
         String username = principal.getName();
 
@@ -65,7 +83,6 @@ public class HomeController {
 
         // 4. Validate the new password and confirm password
         if (!newPassword.equals(confirmPassword)) {
-            //model.addAttribute("error", "New password and confirm password do not match");
             return "redirect:/change-password-form?error2";
         }
 
@@ -73,10 +90,8 @@ public class HomeController {
         boolean passwordChanged = changePasswordService.changePassword(username, newPassword);
 
         if (passwordChanged) {
-            //model.addAttribute("success", "Password changed successfully");
             return "redirect:/change-password-form?success";
         } else {
-            //model.addAttribute("error", "Failed to change password. Please try again later.");
             return "redirect:/change-password-form?error3";
         }
 
