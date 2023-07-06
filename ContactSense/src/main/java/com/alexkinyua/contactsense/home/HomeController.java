@@ -34,6 +34,11 @@ public class HomeController {
         return "error";
     }
 
+    @GetMapping("/profile-page")
+    public String showProfilePage(){
+        return "profilePage";
+    }
+
     @GetMapping("/change-password-form")
     public String changePasswordForm(){
         return "change-password-form";
