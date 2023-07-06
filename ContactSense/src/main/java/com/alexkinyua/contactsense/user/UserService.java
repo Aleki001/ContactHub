@@ -1,7 +1,7 @@
 package com.alexkinyua.contactsense.user;
 
 import com.alexkinyua.contactsense.Role;
-import com.alexkinyua.contactsense.exception.UserAlreadyExistsException;
+//import com.alexkinyua.contactsense.exception.UserAlreadyExistsException;
 import com.alexkinyua.contactsense.registration.RegistrationRequest;
 import com.alexkinyua.contactsense.registration.token.VerificationToken;
 import lombok.RequiredArgsConstructor;
@@ -31,11 +31,11 @@ public class UserService implements IUserService {
 
     @Override
     public User registerUser(RegistrationRequest request) {
-        Optional<User> user = this.findByEmail(request.getEmail());
-        if (user.isPresent()) {
-            throw new UserAlreadyExistsException(
-                    "User with email " + request.getEmail() + " already exists");
-        }
+//        Optional<User> user = this.findByEmail(request.getEmail());
+//        if (user.isPresent()) {
+//            throw new UserAlreadyExistsException(
+//                    "User with email " + request.getEmail() + " already exists");
+//        }
         var newUser = new User();
         newUser.setName(request.getName());
         newUser.setEmail(request.getEmail());

@@ -36,13 +36,13 @@ public class RegistrationCompleteEventListener implements ApplicationListener<Re
         String url = event.getApplicationUrl()+"/register/verifyEmail?token="+verificationToken;
         // 5. send the email to the user
         try {
-            sendVerificationEmail(url);
+            sendVerificationEmail(url, user);
         } catch (MessagingException | UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void sendVerificationEmail(String url) throws MessagingException, UnsupportedEncodingException {
+    public void sendVerificationEmail(String url, User user) throws MessagingException, UnsupportedEncodingException {
         String subject = "Email Verification";
         String senderName = "Users Verification Service";
         String mailContent = "<p> Hi "+ user.getName()+", </p>" +
@@ -53,7 +53,7 @@ public class RegistrationCompleteEventListener implements ApplicationListener<Re
         emailMessage(subject, senderName, mailContent, mailSender, user);
     }
 
-    public void sendPasswordResetVerificationEmail(String url) throws MessagingException, UnsupportedEncodingException {
+    public void sendPasswordResetVerificationEmail(String url, User user) throws MessagingException, UnsupportedEncodingException {
         String subject = "Password Reset Request Verification";
         String senderName = "Users Verification Service";
         String mailContent = "<p> Hi "+ user.getName()+ ", </p>"+
