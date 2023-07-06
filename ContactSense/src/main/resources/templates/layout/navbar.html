@@ -38,7 +38,7 @@
                         <div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="#" sec:authorize="!isAuthenticated()" th:href="@{/register/registration-form}">Register</a>
                             <a class="dropdown-item" href="#" sec:authorize="!isAuthenticated()" th:href="@{/login}">Login</a>
-                            <a class="dropdown-item" href="#" sec:authorize="isAuthenticated()">Change Password</a>
+                            <a class="dropdown-item" href="#" sec:authorize="isAuthenticated()" th:href="@{/change-password-form}">Change Password</a>
                             <a class="dropdown-item" href="#" sec:authorize="isAuthenticated()" th:href="@{/logout}">Logout</a>
                         </div>
                     </li>
