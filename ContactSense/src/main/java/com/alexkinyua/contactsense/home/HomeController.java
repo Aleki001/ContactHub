@@ -21,14 +21,29 @@ import java.util.Optional;
 public class HomeController {
     private final UserService userService;
     private final ChangePasswordService changePasswordService;
+
     @GetMapping
-    public String homePage(){
+    public String home(Model model, Principal principal) {
+        //outputs username on the navbar
+        if (principal != null) {
+            String username = principal.getName();
+            Optional<User> userOptional = userService.findByEmail(username);
+            if (userOptional.isPresent()) {
+                User user = userOptional.get();
+                model.addAttribute("user", user);
+            }
+        }
         return "home";
     }
+
 
     @GetMapping("/login")
     public String login(){
         return "login";
+    }
+    @GetMapping("/logout")
+    public String logout(){
+        return "redirect:/login?logout";
     }
 
     @GetMapping("/error")
@@ -36,13 +51,11 @@ public class HomeController {
         return "error";
     }
 
-//    @GetMapping("/profile-page")
-//    public String showProfilePage(Principal principal, Model model){
-//        String email = principal.getName();
-//        Optional<User> user = userService.findByEmail(email);
-//        model.addAttribute("user", user);
-//        return "profilePage";
-//    }
+    @GetMapping("/access-denied")
+    public String accessDenied(){
+        return "accessDenied";
+    }
+
 @GetMapping("/profile-page")
 public String showProfilePage(Principal principal, Model model) {
     String email = principal.getName();
@@ -57,9 +70,16 @@ public String showProfilePage(Principal principal, Model model) {
     return "profilePage";
 }
 
-
     @GetMapping("/change-password-form")
-    public String changePasswordForm(){
+    public String changePasswordForm(Principal principal, Model model){
+        //inserts username to navbar
+        String username = principal.getName();
+        Optional<User> userOptional = userService.findByEmail(username);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            model.addAttribute("user", user);
+        }
+
         return "change-password-form";
     }
 

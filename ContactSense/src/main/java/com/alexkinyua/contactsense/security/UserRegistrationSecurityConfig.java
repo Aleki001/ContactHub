@@ -48,6 +48,7 @@ public class UserRegistrationSecurityConfig {
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/login")
                 )
+                .rememberMe((remember) ->remember.tokenValiditySeconds(2592000))
                 .requestCache((cache) -> cache.disable())
                 .build();
 

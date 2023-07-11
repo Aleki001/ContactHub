@@ -1,5 +1,8 @@
 body{
-    background: -webkit-linear-gradient(left, #3931af, #00c6ff);
+    /*background: -webkit-linear-gradient(left, #3931af, #00c6ff);*/
+    /*background-image: linear-gradient(125deg, #a72879, #064497);*/
+
+    background: burlywood;
 }
 .contactSense{
     padding: 3%;

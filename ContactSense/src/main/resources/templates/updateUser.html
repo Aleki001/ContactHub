@@ -10,23 +10,25 @@
 <body>
 <div class="container offset-sm-2 col-md-8 mt-lg-5 contactSense">
     <div th:insert="~{layout/navbar}"></div>
-    <form class="px-4 py-3">
+    <form class="px-4 py-3" th:action="@{/users/updateUser/{id}(id = ${user.id})}" th:object="${user}" method="post">
         <div>
             <h2>Edit User</h2>
+        </div>
+        <input type="hidden" th:field="*{id}">
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control" id="name" placeholder="Enter your Name" th:field="*{name}">
+            </div>
         </div>
         <div class="mb-3">
             <label for="email" class="form-label">Email address</label>
             <div class="col-sm-6">
-                <input type="email" class="form-control" id="email" placeholder="email@example.com">
+                <input type="email" class="form-control" id="email" placeholder="email@example.com" th:field="*{email}">
             </div>
         </div>
-        <div class="mb-3">
-            <label for="password" class="form-label">Password</label>
-            <div class="col-sm-6">
-                <input type="password" class="form-control" id="password" placeholder="Password">
-            </div>
-        </div>
-        <button type="submit" class="btn btn-primary">Save User</button>
+
+        <button type="submit" class="btn btn-dark">Save User</button>
 
     </form>
 

@@ -47,8 +47,8 @@
                   <tr th:each="user : ${users}">
                       <td th:text="${user.name}"></td>
                       <td th:text="${user.email}"></td>
-                      <td><a href="#" class="btn btn-dark">Edit</a></td>
-                      <td><a href="#" class="btn btn-danger">Delete</a></td>
+                      <td><a href="#" class="btn btn-dark" th:href="@{/users/editUser/{id}(id=${user.id})}">Edit</a></td>
+                      <td><a href="#" class="btn btn-danger" th:href="@{/users/deleteUser/{id}(id=${user.id})}">Delete</a></td>
                   </tr>
                   </tbody>
               </table>
