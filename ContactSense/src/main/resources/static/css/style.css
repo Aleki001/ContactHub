@@ -1,15 +1,16 @@
 body{
-    /*background: -webkit-linear-gradient(left, #3931af, #00c6ff);*/
-    /*background-image: linear-gradient(125deg, #a72879, #064497);*/
-
-    background: burlywood;
+    background: whitesmoke;
 }
 .contactSense{
-    padding: 3%;
+    background-color: ghostwhite;
+
+    position: relative;
+    box-shadow: 0 10px 30px 0px rgba(0,0,0,0.3);
+    padding: 30px;
+
     margin-top: 1%;
     margin-bottom: 3%;
     border-radius: 0.5rem;
-    background: whitesmoke;
 }
 .profile-img{
     margin-top: 3%;
