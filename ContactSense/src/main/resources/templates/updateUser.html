@@ -9,7 +9,7 @@
 </head>
 <body>
 <div class="container offset-sm-2 col-md-8 mt-lg-5 contactSense">
-    <div th:insert="~{layout/navbar}"></div>
+    <div th:insert="~{layout/navbar1}"></div>
     <form class="px-4 py-3" th:action="@{/users/updateUser/{id}(id = ${user.id})}" th:object="${user}" method="post">
         <div>
             <h2>Edit User</h2>

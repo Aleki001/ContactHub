@@ -1,5 +1,6 @@
 package com.alexkinyua.contactsense.home;
 
+import com.alexkinyua.contactsense.contacts.ContactService;
 import com.alexkinyua.contactsense.home.changePassword.ChangePasswordService;
 import com.alexkinyua.contactsense.user.User;
 import com.alexkinyua.contactsense.user.UserService;
@@ -21,6 +22,7 @@ import java.util.Optional;
 public class HomeController {
     private final UserService userService;
     private final ChangePasswordService changePasswordService;
+    private final ContactService contactService;
 
     @GetMapping
     public String home(Model model, Principal principal) {
@@ -33,6 +35,7 @@ public class HomeController {
                 model.addAttribute("user", user);
             }
         }
+        model.addAttribute("users", userService.getUsers());
         return "home";
     }
 
@@ -47,7 +50,15 @@ public class HomeController {
     }
 
     @GetMapping("/error")
-    public String error(){
+    public String error(Principal principal, Model model){
+        if (principal != null) {
+            String username = principal.getName();
+            Optional<User> userOptional = userService.findByEmail(username);
+            if (userOptional.isPresent()) {
+                User user = userOptional.get();
+                model.addAttribute("user", user);
+            }
+        }
         return "error";
     }
 
@@ -56,19 +67,19 @@ public class HomeController {
         return "accessDenied";
     }
 
-@GetMapping("/profile-page")
-public String showProfilePage(Principal principal, Model model) {
-    String email = principal.getName();
-    Optional<User> optionalUser = userService.findByEmail(email);
-    if (optionalUser.isPresent()) {
-        User user = optionalUser.get();
-        model.addAttribute("user", user);
-    } else {
-        // Handle the case where the user is not found
-        // You can redirect to an error page or display a message
+    @GetMapping("/profile-page")
+    public String showProfilePage(Principal principal, Model model) {
+        String email = principal.getName();
+        Optional<User> optionalUser = userService.findByEmail(email);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            model.addAttribute("user", user);
+        } else {
+            // Handle the case where the user is not found
+            // You can redirect to an error page or display a message
+        }
+        return "profilePage";
     }
-    return "profilePage";
-}
 
     @GetMapping("/change-password-form")
     public String changePasswordForm(Principal principal, Model model){

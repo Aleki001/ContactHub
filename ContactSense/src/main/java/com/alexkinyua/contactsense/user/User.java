@@ -1,6 +1,7 @@
 package com.alexkinyua.contactsense.user;
 
-import com.alexkinyua.contactsense.Role;
+
+import com.alexkinyua.contactsense.contacts.Contact;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,7 +9,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.NaturalId;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
   * @Author: Alex Kinyua
@@ -35,6 +38,9 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private Collection<Role> roles;
+
+    @OneToMany(mappedBy = "userContact", cascade = CascadeType.ALL)
+    private List<Contact> contacts = new ArrayList<>();
 
 
     public User(String name, String email, String password, Collection<Role> roles) {

@@ -1,9 +1,7 @@
 package com.alexkinyua.contactsense.contacts;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.alexkinyua.contactsense.user.User;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,4 +23,13 @@ public class Contact {
     private String Email;
     private String address;
     private String phoneNumber;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User userContact;
+
+
+
+
+
 }

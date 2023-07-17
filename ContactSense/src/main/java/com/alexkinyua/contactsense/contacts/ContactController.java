@@ -17,22 +17,24 @@ import java.util.Optional;
   */
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/contacts")
+
 public class ContactController {
     private final ContactService contactService;
     private final UserService userService;
+    private final ContactRepository contactRepository;
+
     @GetMapping("/availableContacts")
     public String getAllContacts(Model model, Principal principal){
         String username = principal.getName();
         Optional<User> userOptional = userService.findByEmail(username);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
-            model.addAttribute("contacts", contactService.getAllContacts());
             model.addAttribute("user", user);
-
         }
+        model.addAttribute("contacts", contactService.getAllContacts());
         return "contactList";
     }
+
     @GetMapping("/createContact")
     public String createContact(Model model, Principal principal){
         String username = principal.getName();
@@ -47,7 +49,7 @@ public class ContactController {
     @PostMapping("/save")
     public String addContact(Contact contact){
         contactService.save(contact);
-        return "redirect:/contacts/availableContacts?save_success";
+        return "redirect:/availableContacts?save_success";
     }
 
     @GetMapping("/editContact/{id}")
@@ -64,13 +66,23 @@ public class ContactController {
     }
     @PostMapping("updateContact/{id}")
     public String updateContact(@PathVariable("id") Long id, Contact contact){
+        Contact existingContact = contactRepository.findById(id).orElseThrow();
+
+        existingContact.setFirstName(contact.getFirstName());
+        existingContact.setLastName(contact.getLastName());
+        existingContact.setEmail(contact.getEmail());
+        existingContact.setPhoneNumber(contact.getPhoneNumber());
+        existingContact.setAddress(contact.getAddress());
+        existingContact.setUserContact(contact.getUserContact());
+
         contactService.save(contact);
-        return "redirect:/contacts/availableContacts?update_success";
+
+        return "redirect:/availableContacts?update_success";
     }
 
     @GetMapping("/deleteContact/{id}")
     public String deleteContact(@PathVariable("id") Long id){
         contactService.deleteContactById(id);
-        return "redirect:/contacts/availableContacts?delete_success";
+        return "redirect:/availableContacts?delete_success";
     }
 }

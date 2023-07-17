@@ -1,6 +1,6 @@
 package com.alexkinyua.contactsense.registration;
 
-import com.alexkinyua.contactsense.Role;
+import com.alexkinyua.contactsense.user.Role;
 import lombok.Data;
 
 import java.util.List;

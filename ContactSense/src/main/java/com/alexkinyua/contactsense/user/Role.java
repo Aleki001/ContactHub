@@ -1,4 +1,4 @@
-package com.alexkinyua.contactsense;
+package com.alexkinyua.contactsense.user;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
