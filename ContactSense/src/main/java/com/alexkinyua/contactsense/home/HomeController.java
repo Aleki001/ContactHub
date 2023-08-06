@@ -1,10 +1,12 @@
 package com.alexkinyua.contactsense.home;
 
+import com.alexkinyua.contactsense.contacts.Contact;
 import com.alexkinyua.contactsense.contacts.ContactService;
 import com.alexkinyua.contactsense.home.changePassword.ChangePasswordService;
 import com.alexkinyua.contactsense.user.User;
 import com.alexkinyua.contactsense.user.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -23,20 +25,25 @@ public class HomeController {
     private final UserService userService;
     private final ChangePasswordService changePasswordService;
     private final ContactService contactService;
+    @GetMapping("/dashboard")
+    public String dashboard(Model model) {
 
-    @GetMapping
-    public String home(Model model, Principal principal) {
-        //outputs username on the navbar
-        if (principal != null) {
+        model.addAttribute("users", userService.getUsers());
+
+        long totalContacts = contactService.totalContacts();
+        long totalUsers = userService.totalUsers();
+        model.addAttribute("noOfContacts", totalContacts);
+        model.addAttribute("noOfUsers", totalUsers);
+        return "dashboard";
+    }
+
+    @ModelAttribute
+    public void addCurrentUser(Model model, Principal principal) {
+        if (principal != null && !model.containsAttribute("user")) { // Check if user is authenticated and "user" attribute is not already present
             String username = principal.getName();
             Optional<User> userOptional = userService.findByEmail(username);
-            if (userOptional.isPresent()) {
-                User user = userOptional.get();
-                model.addAttribute("user", user);
-            }
+            userOptional.ifPresent(user -> model.addAttribute("user", user));
         }
-        model.addAttribute("users", userService.getUsers());
-        return "home";
     }
 
 
@@ -50,15 +57,7 @@ public class HomeController {
     }
 
     @GetMapping("/error")
-    public String error(Principal principal, Model model){
-        if (principal != null) {
-            String username = principal.getName();
-            Optional<User> userOptional = userService.findByEmail(username);
-            if (userOptional.isPresent()) {
-                User user = userOptional.get();
-                model.addAttribute("user", user);
-            }
-        }
+    public String error(){
         return "error";
     }
 
@@ -68,29 +67,12 @@ public class HomeController {
     }
 
     @GetMapping("/profile-page")
-    public String showProfilePage(Principal principal, Model model) {
-        String email = principal.getName();
-        Optional<User> optionalUser = userService.findByEmail(email);
-        if (optionalUser.isPresent()) {
-            User user = optionalUser.get();
-            model.addAttribute("user", user);
-        } else {
-            // Handle the case where the user is not found
-            // You can redirect to an error page or display a message
-        }
+    public String showProfilePage() {
         return "profilePage";
     }
 
     @GetMapping("/change-password-form")
     public String changePasswordForm(Principal principal, Model model){
-        //inserts username to navbar
-        String username = principal.getName();
-        Optional<User> userOptional = userService.findByEmail(username);
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
-            model.addAttribute("user", user);
-        }
-
         return "change-password-form";
     }
 
@@ -127,5 +109,4 @@ public class HomeController {
         }
 
     }
-
 }

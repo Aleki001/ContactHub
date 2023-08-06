@@ -3,10 +3,7 @@ package com.alexkinyua.contactsense.user;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.Optional;
@@ -51,5 +48,15 @@ public class UserController {
         userService.deleteUser(id);
         return "redirect:/users?delete_success";
     }
+
+    @ModelAttribute
+    public void addCurrentUser(Model model, Principal principal) {
+        if (principal != null && !model.containsAttribute("user")) { // Check if user is authenticated and "user" attribute is not already present
+            String username = principal.getName();
+            Optional<User> userOptional = userService.findByEmail(username);
+            userOptional.ifPresent(user -> model.addAttribute("user", user));
+        }
+    }
+
 
 }

@@ -1,5 +1,7 @@
 package com.alexkinyua.contactsense.user;
 
+import com.alexkinyua.contactsense.exception.ResourceNotFoundException;
+import com.alexkinyua.contactsense.exception.UserAlreadyExistsException;
 import com.alexkinyua.contactsense.registration.RegistrationRequest;
 import com.alexkinyua.contactsense.registration.token.VerificationToken;
 import com.alexkinyua.contactsense.registration.token.VerificationTokenService;
@@ -32,6 +34,10 @@ public class UserService implements IUserService {
 
     @Override
     public User registerUser(RegistrationRequest request) {
+        Optional<User> user = userRepository.findByEmail(request.getEmail());
+        if (user.isPresent()){
+            throw new UserAlreadyExistsException("User with email "+request.getEmail() + " already exist");
+        }
         var newUser = new User();
         newUser.setName(request.getName());
         newUser.setEmail(request.getEmail());
@@ -49,7 +55,8 @@ public class UserService implements IUserService {
 
     @Override
     public Optional<User> findById(Long id) {
-        return userRepository.findById(id);
+        return Optional.ofNullable(userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User with id " + id + " does not exist")));
     }
 
     @Transactional
@@ -64,6 +71,12 @@ public class UserService implements IUserService {
     Optional<User> theUser = userRepository.findById(id);
     theUser.ifPresent(user -> tokenService.deleteUserToken(user.getId()));
     userRepository.deleteById(id);
+    }
+
+    @Override
+    public long totalUsers() {
+        long totalUsers = userRepository.count();
+        return totalUsers;
     }
 
 

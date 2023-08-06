@@ -39,7 +39,7 @@ public class UserRegistrationSecurityConfig {
                 .formLogin((form) -> form
                         .loginPage("/login")
                         .usernameParameter("email")
-                        .defaultSuccessUrl("/")
+                        .defaultSuccessUrl("/dashboard")
                         .permitAll()
                 )
                 .logout((logout) -> logout

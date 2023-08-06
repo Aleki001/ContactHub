@@ -20,12 +20,12 @@ public class Contact {
     private Long id;
     private String firstName;
     private String lastName;
-    private String Email;
+    private String email;
     private String address;
     private String phoneNumber;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User userContact;
 
 

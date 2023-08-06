@@ -17,4 +17,5 @@ public interface IUserService {
     Optional<User> findById(Long id);
     void updateUser(Long id, String name, String email);
     void deleteUser(Long id);
+    long totalUsers();
 }

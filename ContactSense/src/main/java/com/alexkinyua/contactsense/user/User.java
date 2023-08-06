@@ -2,6 +2,7 @@ package com.alexkinyua.contactsense.user;
 
 
 import com.alexkinyua.contactsense.contacts.Contact;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -39,7 +40,8 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private Collection<Role> roles;
 
-    @OneToMany(mappedBy = "userContact", cascade = CascadeType.ALL)
+    @JsonIgnore
+    @OneToMany(mappedBy = "userContact")
     private List<Contact> contacts = new ArrayList<>();
 
 
