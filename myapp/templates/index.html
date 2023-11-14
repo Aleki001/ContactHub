@@ -1,0 +1,59 @@
+{% extends "layout.html" %}
+{% block content %}
+<!-- Search section starts here -->
+<section class="container search">
+    <a href="{{url_for('contacts.new_contact')}}" class="btn btn-success">Add Contact</a>
+    <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Search contact" aria-label="Search">
+        <button class="btn btn-success" type="submit">Search</button>
+    </form>
+</section>
+<!-- Search sections ends -->
+
+<!-- All Contacts Section starts -->
+<section class="container contacts">
+    {% for contact in contacts.items %}
+    <div class="card">
+        <div class="pic">
+            <div>
+                <img src="{{ url_for('static', filename='contact_images/' + contact.image_file) }}" class="pic_contact" alt="Contact Image">
+            </div>
+            <div class="icons mt-2">
+                <a href="{{url_for('contacts.contact', contact_id=contact.id)}}"><i class="bi bi-pencil-square fs-6 edit_icon me-2"></i>Edit</a>
+                <form action="{{ url_for('contacts.delete_contact', contact_id=contact.id) }}" method="post">
+                    <button type="submit" class="btn btn-link"><i class="bi bi-trash fs-6 delete_icon me-2"></i>Delete</button>
+                </form>
+            </div>
+            
+        </div>
+
+        <div class="details">
+            <h3 class="contact_name">{{contact.full_name}}</h3>
+            <hr>
+            <h4>Details</h4>
+            <ul>
+                <li><b>Email:</b> {{contact.email}} </li>
+                <li><b>Address:</b> {{contact.address}} </li>
+                <li><b>Phone No:</b> {{contact.phone_no}} </li>
+            </ul>
+        </div>
+    </div>
+    {% endfor %}
+</section>
+<!-- Contacts section ends -->
+<div class="page_number">
+{% for page_num in contacts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+{% if page_num %}
+  {% if contacts.page == page_num %}
+    <a class="btn btn-success mb-4" href="{{ url_for('views.home', username=user.username, page=page_num) }}">{{ page_num }}</a>
+  {% else %}
+    <a class="btn btn-outline-success mb-4" href="{{ url_for('views.home', username=user.username, page=page_num) }}">{{ page_num }}</a>
+  {% endif %}
+{% else %}
+  ...
+{% endif %}
+{% endfor %}
+{% endblock %}
+
+
+</div>

@@ -1,0 +1,201 @@
+body {
+    /* background-color: rgb(241, 239, 236); */
+    background-color: whitesmoke;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap; /* Allow flex items to wrap */
+    justify-content: space-between; /* Distribute items evenly with equal space between them */
+}
+
+.card {
+    border: none;
+    padding: 20px;
+    margin-top: 10px;
+    background-color: white;
+    width: calc(33.33% - 20px); /* Adjust the width to fit three cards in a row with margins */
+    min-height: 100px;
+    min-width: 300px;
+    display: flex;
+    flex-direction: row; /* Ensure the columns are side by side */
+    margin-bottom: 10px; /* Add some space between rows */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a light box shadow to the card */
+}    
+
+.pic {
+    width: 100px;
+    flex-shrink: 0;
+}
+
+.pic_contact{
+    width: 100%;
+    height: auto;
+}
+
+.details {
+    width: 100%;
+    padding-left: 20px; /* Add some space between the columns */
+    word-wrap: break-word; /* Ensure text wraps within the available space */
+}
+
+.details ul {
+    padding: 0;
+}
+
+.details li {
+    list-style-type: none;
+    font-size: 14px;
+}
+
+.details h3{
+    font-size: 24px;
+    color: #008080;
+}
+
+.details h4 {
+    margin-top: 0;
+    font-size: 18px;
+}
+
+
+
+.contact_name {
+    text-decoration: none;
+}
+
+hr {
+    margin-top: 4px;
+    margin-bottom: 3px;
+}
+
+.icons {
+    display: inline-block;
+   
+}
+
+.edit_icon {
+    color: #008080;
+}
+
+.delete_icon {
+    color: rgb(243, 109, 109);
+}
+
+
+footer {
+    height: 60px;
+    width: 100%;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 50px;
+}
+
+
+.icon-text {
+    margin-right: 60px;
+}
+
+.icon-text i {
+    margin-right: 10px;
+}
+
+.navbar-brand h3 {
+    color: #008080;
+}
+
+.btn-success {
+    color: #fff;
+    background-color: #008080;
+    border-color: #008080;
+}
+
+
+.search {
+    margin-top: 30px;
+    border: #008080 solid 1px;
+    padding-left: 40px;
+    padding-right: 40px;
+    border-radius: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.login, .sign_up {
+    border: #008080 solid 1px;
+    border-radius: 5px;
+    width: 40%;
+    padding: 10px;
+    align-items: center;
+    margin-top: 20px;
+    
+}
+
+.profile_pic {
+    height: 125px;
+    width: 125px;
+    margin-right:20px;
+    margin-bottom: 16px;
+}
+
+.profile_container {
+    background-color: white;
+    max-width: 60%;
+    padding: 30px;
+    margin-top: 20px;
+    margin-left: 100px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.media-body {
+    margin-left: 30px;
+}
+
+.flash_message {
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-top: 10px;
+}
+
+.page_number {
+    margin-left: 100px;
+    margin-top: 30px;
+}
+
+/* Media Query for small screens */
+@media (max-width: 768px) {
+    .card {
+        width: 100%;
+    }
+
+    .profile_container {
+        max-width: 100%;
+    }
+}
+
+/* Media Query for extra small screens */
+@media (max-width: 576px) {
+    .card {
+        width: 100%; /* Adjust the width to occupy the entire row */
+    }
+
+    .login, .sign_up {
+        width: 50%;
+    }
+    .details {
+        width: 100%; /* Adjust the width of details to occupy the entire width */
+        padding-left: 0; /* Remove padding on small screens */
+        padding-top: 20px; /* Add some space at the top of details on small screens */
+    }
+
+    .profile_container {
+        max-width: 100%;
+    }
+
+
+}
+

@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% block content %}
+<!-- Sign up form starts here -->
+    <section class="container sign_up">
+        <form action="" method="POST" class="p-3">
+            <h3>Create Account <b><span style="color:#008080">ContactHub</span></b></h3>
+            <div class="form-group my-3">
+              <label>Username</label>
+              <input type="text" class="form-control" placeholder="Enter username" name="username">
+            </div>
+            <div class="form-group my-3">
+                <label>Email address</label>
+                <input type="email" class="form-control" placeholder="Enter email" name="email">
+              </div>
+            <div class="form-group my-3">
+              <label>Password</label>
+              <input type="password" class="form-control" placeholder="Password" name="password">
+            </div>
+              <div class="form-group my-3">
+                <label>Confirm Password</label>
+                <input type="password" class="form-control" placeholder="Confirm your password" name="confirm_pass">
+              </div>
+            
+            <button type="submit" class="btn btn-success mb-3">Sign up</button><br>
+            <small>Have an account? <a href="{{url_for('auth.login')}}">Log in</a>.</small>
+          </form>
+    </section>
+<!-- Login form ends here -->
+
+{%endblock%}
