@@ -1,7 +1,8 @@
 from myapp import db
 from flask_login import UserMixin
-from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
-from myapp import create_app
+from itsdangerous import URLSafeTimedSerializer
+
+s = URLSafeTimedSerializer('Thisisasecret')
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
@@ -11,16 +12,14 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(60), nullable=False)
     contacts = db.relationship('Contact')
 
-    def get_reset_token(self, expires_sec=1800):
-        s = Serializer(create_app().config['SECRET_KEY'], expires_sec)
-        return s.dumps({'user_id': self.id}).decode('utf-8')
+    def get_reset_token(self):
+        return s.dumps(self.id, salt='reset_password').decode('utf-8')
     
 
     @staticmethod
     def verify_reset_token(token):
-        s = Serializer(create_app().config('SECRET_KEY'))
         try:
-            user_id = s.loads(token)['user_id']
+            user_id = s.loads(token, salt='reset_password', max_age=1800)
         except:
             return None
         return User.query.get(user_id)

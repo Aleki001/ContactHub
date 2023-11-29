@@ -53,3 +53,19 @@ def save_picture(form_picture):
 
     return picture_fn
 
+@views.route('/', methods=['POST', 'GET'])
+@login_required
+def search_contact():
+    if request.method == 'POST':
+        query = request.form['query']
+        page = request.args.get('page', 1, type=int)
+        
+        contacts = Contact.query.filter(Contact.full_name.like(f"%{query}%")).paginate(page=page, per_page=9)
+        
+        return render_template('search_contact.html', contacts=contacts, title='Home', user=current_user, query=query)
+
+    return render_template('index.html', title='Home', user=current_user)
+
+
+
+

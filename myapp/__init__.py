@@ -4,6 +4,7 @@ from flask_bcrypt import Bcrypt
 from os import path 
 from flask_login import LoginManager
 from flask_mail import Mail
+from .config import Config
 
 
 db = SQLAlchemy()
@@ -11,10 +12,10 @@ DB_NAME = "contacthub.db"
 bcrypt = Bcrypt()
 mail = Mail()
 
-def create_app():
+def create_app(config_class=Config):
     app = Flask(__name__)
-    app.config['SECRET_KEY'] = 'jsdjgs fjhdhsjsig fghb,cb'
-    app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
+    app.config.from_object(Config)
+
     db.init_app(app)
     bcrypt.init_app(app)
 
@@ -38,11 +39,6 @@ def create_app():
     login_manager.login_view = 'auth.login'
     login_manager.init_app(app)
 
-    app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-    app.config['MAIL_PORT'] = '587'
-    app.config['MAIL_USE_TLS'] = True
-    app.config['MAIL_USERNAME'] = 'alexapptest123@gmail.com'
-    app.config['MAIL_PASSWORD'] = 'hymj lzax oyxv zwgi'
     mail.init_app(app)
     
     
