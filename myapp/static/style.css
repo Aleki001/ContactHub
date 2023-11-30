@@ -1,7 +1,14 @@
 body {
     /* background-color: rgb(241, 239, 236); */
-    background-color: whitesmoke;
+    /* background-color: white; */
+    background-image: url(bg_images/gray.jpg);
+    
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin: 0;
 }
+
+
 
 .container {
     display: flex;
@@ -11,9 +18,10 @@ body {
 
 .card {
     border: none;
+    border-bottom: #008080 solid 4px;
     padding: 20px;
     margin-top: 10px;
-    background-color: white;
+    background-color: whitesmoke;
     width: calc(33.33% - 20px); /* Adjust the width to fit three cards in a row with margins */
     min-height: 100px;
     min-width: 300px;
@@ -83,24 +91,18 @@ hr {
 }
 
 
-footer {
-    height: 60px;
-    width: 100%;
-    bottom: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin-top: 50px;
-}
-
-
 .icon-text {
     margin-right: 60px;
 }
 
 .icon-text i {
     margin-right: 10px;
+}
+
+.navbar {
+    background-image: url(bg_images/gray.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .navbar-brand h3 {
@@ -116,7 +118,8 @@ footer {
 
 .search {
     margin-top: 30px;
-    border: #008080 solid 1px;
+    /* border: #008080 solid 1px; */
+    border: whitesmoke solid 1px;
     padding-left: 40px;
     padding-right: 40px;
     border-radius: 5px;
@@ -132,6 +135,8 @@ footer {
     padding: 10px;
     align-items: center;
     margin-top: 20px;
+    background-color: whitesmoke;
+    border-bottom: #008080 solid 4px;
     
 }
 
@@ -143,12 +148,14 @@ footer {
 }
 
 .profile_container {
-    background-color: white;
+    background-color: whitesmoke;
     max-width: 60%;
     padding: 30px;
     margin-top: 20px;
     margin-left: 100px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    border-bottom: #008080 solid 4px;
 }
 
 .media-body {

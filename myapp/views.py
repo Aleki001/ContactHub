@@ -11,12 +11,16 @@ from PIL import Image
 views = Blueprint('views', __name__)
 
 @views.route('/')
+def landing():
+    return render_template('landingpage.html', title='Home')
+
+@views.route('/contacts')
 @login_required
-def home ():
+def index():
     page = request.args.get('page', 1, type=int)
     contacts = Contact.query.filter_by(user_id=current_user.id).paginate(page=page, per_page=9)
 
-    return render_template('index.html', contacts = contacts, title='Home', user=current_user)
+    return render_template('index.html', contacts = contacts, title='Contacts', user=current_user)
 
 @views.route("/account", methods=['GET', 'POST'])
 @login_required
@@ -53,14 +57,14 @@ def save_picture(form_picture):
 
     return picture_fn
 
-@views.route('/', methods=['POST', 'GET'])
+@views.route('/contacts', methods=['POST', 'GET'])
 @login_required
 def search_contact():
     if request.method == 'POST':
         query = request.form['query']
         page = request.args.get('page', 1, type=int)
         
-        contacts = Contact.query.filter(Contact.full_name.like(f"%{query}%")).paginate(page=page, per_page=9)
+        contacts = Contact.query.filter_by(user_id=current_user.id).filter(Contact.full_name.like(f"%{query}%")).paginate(page=page, per_page=9)
         
         return render_template('search_contact.html', contacts=contacts, title='Home', user=current_user, query=query)
 

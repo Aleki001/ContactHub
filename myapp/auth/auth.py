@@ -11,7 +11,7 @@ auth = Blueprint('auth', __name__)
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('views.home'))
+        return redirect(url_for('views.index'))
     if request.method == 'POST':
         email = request.form.get('email')
         password = request.form.get('password')
@@ -22,7 +22,7 @@ def login():
                 flash('Logged in successfully', 'success')
                 login_user(user, remember=request.form.get('remember'))
                 next_page = request.args.get('next')
-                return redirect(next_page) if next_page else redirect(url_for('views.home'))
+                return redirect(next_page) if next_page else redirect(url_for('views.index'))
         else:
             flash('Please check your username and password.', 'danger')
 
@@ -78,7 +78,7 @@ def send_reset_email(user):
 @auth.route('/reset_password', methods=['GET', 'POST'])
 def reset_request():
     if current_user.is_authenticated:
-        return redirect(url_for('home'))
+        return redirect(url_for('views.index'))
     form = RequestResetForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()  
@@ -91,7 +91,7 @@ def reset_request():
 @auth.route('/reset_password/<token>', methods=['GET', 'POST'])
 def reset_token(token):
     if current_user.is_authenticated:
-        return redirect(url_for('home'))
+        return redirect(url_for('views.index'))
     user = User.verify_reset_token(token)
     if user is None:
         flash('That is an invalid or expired token', 'warning')
