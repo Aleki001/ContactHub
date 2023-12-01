@@ -162,6 +162,15 @@ hr {
     margin-left: 30px;
 }
 
+.change_password {
+    width: 50%;
+    background-color: whitesmoke;
+    margin-left: 50px;
+    padding: 20px;
+    border-radius: 10px;
+    border-bottom: #008080 solid 4px;
+}
+
 .flash_message {
     margin-left: 100px;
     margin-right: 100px;

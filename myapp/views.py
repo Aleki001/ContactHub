@@ -1,6 +1,6 @@
 from flask import render_template, Blueprint, flash, url_for, request, redirect, current_app
 from flask_login import current_user, login_required
-from . import db
+from . import db, bcrypt
 from .forms import UpdateProfileForm, ContactForm
 import os
 import secrets
@@ -71,5 +71,24 @@ def search_contact():
     return render_template('index.html', title='Home', user=current_user)
 
 
+@views.route('/change-password', methods=('POST', 'GET'))
+@login_required
+def change_pass():
+    if request.method == 'POST':
+        old_pass= request.form.get('oldpassword')
+        new_pass = request.form.get('newpassword')
+        confirm_pass = request.form.get('confirmpassword')
+
+        if not bcrypt.check_password_hash(current_user.password, old_pass):
+            flash('Your old password is incorrect. Try again', 'danger')
+        elif new_pass != confirm_pass:
+            flash('New password and confirm password do not match! Try again.', 'danger')
+        else:
+            hashed_pass = bcrypt.generate_password_hash(new_pass).decode('utf-8')
+            current_user.password = hashed_pass
+            db.session.commit()
+            flash('Password changed successfully!', 'success')
+            return redirect(url_for('views.index'))
+    return render_template('change_password.html', user=current_user, title = 'Change Password')
 
 
