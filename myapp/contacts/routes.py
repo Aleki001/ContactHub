@@ -49,7 +49,7 @@ def new_contact():
         db.session.commit()
 
         flash('New contact created successfully!', 'success')
-        return redirect(url_for('views.home'))
+        return redirect(url_for('views.index'))
 
     return render_template('new_contact.html', form=form, user=current_user)
 
@@ -95,4 +95,4 @@ def delete_contact(contact_id):
     db.session.delete(contact)
     db.session.commit()
     flash(' A contact has been deleted', 'success')
-    return redirect(url_for('views.home'))
+    return redirect(url_for('views.index'))
