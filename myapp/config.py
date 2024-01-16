@@ -1,6 +1,8 @@
 class Config:
-    DB_NAME = "contacthub.db"
-    SQLALCHEMY_DATABASE_URI = f'sqlite:///{DB_NAME}'
+    DB_NAME = "contacthub"
+    # SQLALCHEMY_DATABASE_URI = f'sqlite:///{DB_NAME}'
+    SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://root:Wababe8843@localhost/contacthub"
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
     SECRET_KEY = 'jsdjgs fjhdhsjsig fghb,cb'
     MAIL_SERVER = 'smtp.gmail.com'
     MAIL_PORT = '587'

@@ -5,10 +5,10 @@ from os import path
 from flask_login import LoginManager
 from flask_mail import Mail
 from .config import Config
+from flask_migrate import Migrate
 
 
 db = SQLAlchemy()
-DB_NAME = "contacthub.db"
 bcrypt = Bcrypt()
 mail = Mail()
 
@@ -33,7 +33,8 @@ def create_app(config_class=Config):
     app.register_blueprint(contacts)
 
 
-    create_database(app)
+
+    migrate = Migrate(app, db)
 
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'
@@ -49,9 +50,3 @@ def create_app(config_class=Config):
 
 
     return app
-
-
-def create_database(app):
-    if not path.exists('myapp/' + DB_NAME):
-        with app.app_context():
-            db.create_all()
