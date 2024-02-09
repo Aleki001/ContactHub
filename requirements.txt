@@ -6,7 +6,7 @@ dnspython==2.4.2
 email-validator==2.1.0.post1
 Flask==3.0.0
 Flask-Bcrypt==1.0.1
-Flask-Login==0.7.0
+Flask-Login==0.6.3
 Flask-Mail==0.9.1
 Flask-Migrate==4.0.5
 Flask-Redmail==0.3.0
