@@ -11,6 +11,7 @@ from flask_migrate import Migrate
 db = SQLAlchemy()
 bcrypt = Bcrypt()
 mail = Mail()
+migrate = Migrate()
 
 def create_app(config_class=Config):
     app = Flask(__name__)
@@ -18,6 +19,7 @@ def create_app(config_class=Config):
 
     db.init_app(app)
     bcrypt.init_app(app)
+    migrate.init_app(app, db)
 
 
     from myapp.auth.auth import auth
@@ -32,9 +34,7 @@ def create_app(config_class=Config):
     app.register_blueprint(errors)
     app.register_blueprint(contacts)
 
-
-
-    migrate = Migrate(app, db)
+   
 
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'
